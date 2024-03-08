@@ -24,6 +24,7 @@
         $akumulasi_uts      = $nilai_uts * BOBOTUTS;
         $akumulasi_uas      = $nilai_uas * BOBOTUAS;
         $nilai_akhir    = $akumulasi_hadir + $akumulasi_tugas + $akumulasi_uts + $akumulasi_uas;
+        var_dump($akumulasi_hadir ."<br/>". $akumulasi_tugas ."<br/>". $akumulasi_uts ."<br/>". $akumulasi_uas);
 
         $keterangan = "Lulus";
         if($nilai_akhir <= 65) {
@@ -77,7 +78,7 @@
     </fieldset>
 
     <center>
-        <h2>Nilai Akademik <?= $nilai_akademik ?? ""?></h2>
+        <h2>Nilai Akademik <?= $matkul ?? ""?></h2>
         <h4>Nama : <?= $nama ?? "-"?></h4>
         <h4>Nim : <?= $nim ?? "-"?></h4>
 
