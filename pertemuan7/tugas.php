@@ -48,7 +48,6 @@
                 menu($_SESSION['menu']);
             }
         }
-
         if (isset($_POST['reset'])) {
             session_destroy();
         }
