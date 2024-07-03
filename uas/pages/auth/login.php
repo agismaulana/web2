@@ -6,8 +6,8 @@
 
     include $_SERVER["DOCUMENT_ROOT"] . "/uas/functions.php";
 
-    if($_SESSION['login'] == true) {
-        header("Location: /uas/pages/home.php");
+    if(isset($_SESSION['login']) && $_SESSION['login'] == true) {
+        header("location: /pages/home.php");
     }
 
     if(isset($_POST['login'])) {

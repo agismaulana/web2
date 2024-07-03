@@ -1,21 +1,26 @@
 <?php
 
     session_start();
+
+    require_once "vendor/autoload.php";
     include "config.php";
+
+    use Dompdf\Dompdf;
+
 
     function login($data) {
         $conn = $GLOBALS["conn"];
         if($data['username'] == "211011401732" && $data['password'] == "211011401732") {
             $_SESSION['login'] = true;
 
-            header("Location: /uas/pages/home.php");
+            header("location: /uas/pages/home.php");
         }
     }
 
     function getKlasemens() {
         $conn = $GLOBALS["conn"];
 
-        $sql = "SELECT countries.*, klasemens.winner, klasemens.draw, klasemens.lose, klasemens.poin, grup.name as grup_name FROM countries LEFT JOIN klasemens ON countries.id = klasemens.countries_id LEFT JOIN grup ON klasemens.group_id = grup.id ";
+        $sql = "SELECT countries.*, klasemens.id as klasemens_id, klasemens.winner, klasemens.draw, klasemens.lose, klasemens.poin, grup.name as grup_name FROM countries LEFT JOIN klasemens ON countries.id = klasemens.countries_id LEFT JOIN grup ON klasemens.group_id = grup.id";
         $result = mysqli_query($conn, $sql);
 
         $result = $result->fetch_all(MYSQLI_ASSOC);
@@ -45,7 +50,7 @@
 
         mysqli_query($conn, $sql);
 
-        header("Location: /uas/pages/klasemens/index.php");
+        header("location: /uas/pages/klasemens/index.php");
     }
 
     function updateKlasemens($id = null) {
@@ -61,7 +66,7 @@
             $sql = "UPDATE klasemens SET countries_id = '$countries_id', group_id = '$group_id', winner = '$winner', draw = '$draw', lose = '$lose', poin = '$poin' WHERE id = '$id'";
             mysqli_query($conn, $sql);
 
-            header("Location: /uas/pages/klasemens/index.php");
+            header("location: /uas/pages/klasemens/index.php");
         }
     }
 
@@ -71,15 +76,68 @@
             $sql = "DELETE FROM klasemens WHERE id = '$id'";
             mysqli_query($conn, $sql);
 
-            header("Location: /uas/pages/klasemens/index.php");
+            header("location: /uas/pages/klasemens/index.php");
         }
     }
 
     function cetakKlasemens() {
         $klasemens = getKlasemens();
 
-        $data = new DomPDf();
+        $data = new Dompdf();
 
+        $klasemensData = '';
+        foreach($klasemens as $klasemen) {
+            $klasemensData .= '
+            <tr>
+                <td>'.$klasemen['id'].'</td>
+                <td>'.$klasemen['name'].'</td>
+                <td>'.$klasemen['grup_name'].'</td>
+                <td>'.$klasemen['winner'].'</td>
+                <td>'.$klasemen['draw'].'</td>
+                <td>'.$klasemen['lose'].'</td>
+                <td>'.$klasemen['poin'].'</td>
+            </tr>
+            ';
+        }
+        
+        $html = '
+        <html>
+        <head>
+            <style>
+                table, th, td {
+                    border: 1px solid black;
+                }
+            </style>
+        </head>
+        <body>
+        <h1 style="text-align: center;">Klasemen</h1>
+        <table style="width: 100%">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Country</th>
+                    <th>Group</th>
+                    <th>Winner</th>
+                    <th>Draw</th>
+                    <th>Lose</th>
+                    <th>Poin</th>
+                </tr>
+            </thead>
+            <tbody>
+                '.$klasemensData.'
+            </tbody>
+        </table>
+        </body>
+        </html>
+        ';
+
+        $data->loadHtml($html);
+
+        $data->setPaper('A4', 'landscape');
+
+        $data->render();
+
+        $data->stream("klasemen.pdf", array("Attachment" => false));
     }
 
     // Countries
@@ -112,7 +170,7 @@
         $sql = "INSERT INTO grup (name) VALUES ('$name')";
         mysqli_query($conn, $sql);
 
-        header("Location: /uas/pages/groups/index.php");
+        header("location: /uas/pages/groups/index.php");
     }
 
     function updateGroup($id = null) {
@@ -123,7 +181,7 @@
             $sql = "UPDATE grup SET name = '$name' WHERE id = '$id'";
             mysqli_query($conn, $sql);
 
-            header("Location: /uas/pages/groups/index.php");
+            header("location: /uas/pages/groups/index.php");
         }
     }
 
@@ -134,6 +192,6 @@
             $sql = "DELETE FROM grup WHERE id = '$id'";
             mysqli_query($conn, $sql);
 
-            header("Location: /uas/pages/groups/index.php");
+            header("location: /uas/pages/groups/index.php");
         }
     }

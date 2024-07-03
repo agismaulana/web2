@@ -1,0 +1,17 @@
+{
+    "name": "rriya/uas",
+    "autoload": {
+        "psr-4": {
+            "Rriya\\Uas\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Agis Maulana",
+            "email": "agismaulana112@gmail.com"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "^3.0"
+    }
+}

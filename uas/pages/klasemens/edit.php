@@ -1,7 +1,4 @@
 <?php 
-
-    date_default_timezone_set('Asia/Jakarta');
-
     include $_SERVER['DOCUMENT_ROOT']."/uas/functions.php";
 
     $title = "Edit Klasemen";

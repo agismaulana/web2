@@ -1,5 +1,5 @@
 <?php 
-
+    date_default_timezone_set('Asia/Jakarta');
     include $_SERVER['DOCUMENT_ROOT'] . '/uas/functions.php';
 
     $title = 'Kelasemen';
@@ -44,7 +44,7 @@
                     <td><?= $klasemen['poin'] ?? 0 ?></td>
                     <td>
                         <a href="edit.php?id=<?= $klasemen['id'] ?>">Edit</a>
-                        <a href="index.php?id=<?= $klasemen['id'] ?>&action=delete" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="index.php?id=<?= $klasemen['klasemens_id'] ?>&action=delete" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

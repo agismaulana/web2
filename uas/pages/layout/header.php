@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<?php if($_SESSION['login'] == true) : ?>
+<?php if(isset($_SESSION['login']) && $_SESSION['login'] == true) : ?>
     <ul>
         <li><a href="/uas/index.php">Home</a></li>
         <!-- <li><a href="/uas/pages/groups/index.php">group</a></li>

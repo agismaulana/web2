@@ -1,4 +1,4 @@
 <?php
 
-header('location: ./pages/home.php');
+header('location: /uas/pages/home.php');
 exit;

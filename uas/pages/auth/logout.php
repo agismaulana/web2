@@ -5,4 +5,4 @@
     session_unset();
     session_destroy();
 
-    header("Location: /uas/pages/auth/login.php");
+    header("location: /pages/auth/login.php");
